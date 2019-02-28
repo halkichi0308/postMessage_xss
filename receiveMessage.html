@@ -1,0 +1,39 @@
+<html>
+  <body>
+    <script>
+      'use strict'
+      /*
+      * <http://example.org> で実行される popup のスクリプト:
+      */
+
+      // postMessage が呼び出された後に呼び出されます。
+      function receiveMessage(event) {
+        // このメッセージの送信者は信頼している者か？
+        /*
+        if (event.origin !== "http://example.com") {
+          return;
+        }
+        */
+        console.log(event)
+        let h1 = document.querySelector('html body h1')
+        h1.innerHTML = event.data
+        // event.source は window.opener
+        // event.data は "hello there!"
+
+        // 受け取ったメッセージの生成元を確かめたい場合（どんな場合でもそうするべ
+        // きです）、メッセージに返答するための便利なイディオムは event.source 上
+        // の postMessage を呼び出し、targetOrigin に event.origin を指定すること
+        // です。
+        event.source.postMessage(
+          "hi there yourself!  the secret response " +
+          "is: rheeeeet!",
+          event.origin
+        );
+      }
+
+      window.addEventListener('message', receiveMessage, false);
+    </script>
+    <h1>receiveMessage</h1>
+
+  </body>
+</html>

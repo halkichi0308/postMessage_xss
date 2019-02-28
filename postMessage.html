@@ -1,0 +1,26 @@
+<html>
+  <body>
+    <script>
+      'use strict'
+      let popup = ''
+      let targetUrl = 'http://receive.postmessage.site/receiveMessage.html'
+
+      let popupWindow = () => {
+        popup = window.open(targetUrl);
+      }
+
+      let sendMessage = evt => {
+        let pushMessage = document.querySelector('#sendMessage').value
+        //Message sent to another window of the cross-origin。
+        popup.postMessage(pushMessage, targetUrl)
+      }
+
+    </script>
+    <h1>postMessage</h1>
+    <form>
+      <input type="text" id="sendMessage" placeholder="input messages here." value="">
+      <input type="button" onclick="popupWindow()" value="window open">
+      <input type="button" onclick="sendMessage()" value="submit">
+    </form>
+  </body>
+</html>
